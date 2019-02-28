@@ -1,7 +1,7 @@
 <?php
 
 /**
- * List all users with a link to edit
+ * Delete a user
  */
 
 require "../config.php";
@@ -10,6 +10,24 @@ require "../common.php";
 if (isset($_POST['submit'])) {
     if (!hash_equals($_SESSION['csrf'], $_POST['csrf'])) {
         die();
+    }
+}
+
+if(isset($_GET['id'])) {
+    try {
+      $connection = new PDO($dsn, $username, $password, $options);
+
+      $id = $_GET['id'];
+
+      $sql = "DELETE FROM users WHERE id = :id";
+
+      $statement = $connection->prepare($sql);
+      $statement->bindValue(':id', $id);
+      $statement->execute();
+
+      $success = "User successfully deleted";
+    } catch(PDOException $error) {
+        echo $sql . "<br>" . $error->getMessage();
     }
 }
 
@@ -55,7 +73,7 @@ try {
       <td><?php echo escape($row["age"]); ?></td>
       <td><?php echo escape($row["location"]); ?></td>
       <td><?php echo escape($row["date"]); ?> </td>
-      <td><a href="update-single.php?id=<?php echo escape($row["id"]); ?>">Edit</a></td>
+      <td><a href="delete.php?id=<?php echo escape($row["id"]); ?>">Delete</a></td>
   </tr>
   <?php endforeach; ?>
   </tbody>
