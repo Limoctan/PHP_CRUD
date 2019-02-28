@@ -59,6 +59,7 @@ if (isset($_POST['submit'])) {
     <input type="text" name="age" id="age">
     <label for="location">Location</label>
     <input type="text" name="location" id="location">
+    <input name="csrf" type="hidden" value="<?php echo escape($_SESSION['csrf']); ?>">
     <input type="submit" name="submit" value="Submit">
 </form>
 

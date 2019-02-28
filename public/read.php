@@ -6,6 +6,9 @@
  *
  */
 
+require "../config.php";
+require "../common.php";
+
 if (isset($_POST['submit'])) {
 	try {
 		$connection = new PDO($dsn, $username, $password, $options);
